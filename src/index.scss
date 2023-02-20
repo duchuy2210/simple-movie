@@ -4,13 +4,21 @@
 
 @layer base {
   body {
-    @apply bg-slate-900 font-body px-5;
+    @apply bg-slate-900 font-body;
   }
 }
 @layer components {
   .page-container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin-right: auto;
     margin-left: auto;
+  }
+  .movie-list .swiper-slide {
+    width: 300px;
+    height: auto;
+    color: white;
+  }
+  .banner .swiper{
+    height: 100%;
   }
 }
