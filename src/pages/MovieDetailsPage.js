@@ -33,7 +33,7 @@ const MovieDetailsPage = () => {
               />
             </svg>
           </button>
-          <div className="w-full h-full opacity-40">
+          <div className="w-full h-full opacity-30">
             <img
               className="object-cover w-full h-full block"
               src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
@@ -52,7 +52,7 @@ const MovieDetailsPage = () => {
               </button>
             </div>
             <div className='text-white py-10'>
-              <h1 className=' text-4xl '>{title}</h1>
+              <h1 className=' text-5xl font-serif'>{title}</h1>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { fetcher } from '../../config';
 import useSWR from 'swr';
 import { SwiperSlide, Swiper } from 'swiper/react';
