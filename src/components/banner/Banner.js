@@ -2,19 +2,21 @@ import React from 'react';
 import { fetcher } from '../../config';
 import useSWR from 'swr';
 import { SwiperSlide, Swiper } from 'swiper/react';
+import { apiKey } from '../../config';
+import { useNavigate } from 'react-router-dom';
 
 const Banner = () => {
   // const [movies, setMovies] = useState([]);
-  const { data} = useSWR(
-    'https://api.themoviedb.org/3/movie/upcoming?api_key=40da76dcc96f3bc0d962c6b579c8c842&language=en-US&page=1',
+  const { data } = useSWR(
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`,
     fetcher
   );
   const movies = data?.results || [];
   // useEffect(() => {
-  //   data && setMovies(data.results);
-  // }, [data]);
-  return (
-    <section className="banner h-[500px] page-container mb-16">
+    //   data && setMovies(data.results);
+    // }, [data]);
+    return (
+      <section className="banner h-[500px] page-container mb-16">
       <Swiper grabCursor={true} slidesPerView={'auto'}>
         {!!movies?.length > 0 &&
           movies.map(item => {
@@ -29,7 +31,9 @@ const Banner = () => {
   );
 };
 function BannerItems({ item }) {
-  const { title, backdrop_path } = item;
+  const navigate = useNavigate();
+  const { title, backdrop_path, id } = item;
+  console.log(item);
   return (
     <div className="h-full w-full bg-white rounded-lg mx-auto relative">
       <div className="overlay inset-0 absolute bg-gradient-to-t from-black rounded-lg to-transparent"></div>
@@ -51,7 +55,8 @@ function BannerItems({ item }) {
             action
           </span>
         </div>
-        <button className="px-6 py-3 bg-primary rounded-lg font-medium text-white">
+        <button
+          onClick={()=>navigate(`/movie/${id}`)} className="px-6 py-3 bg-primary rounded-lg font-medium text-white">
           Watch
         </button>
       </div>
