@@ -18,7 +18,45 @@
     height: auto;
     color: white;
   }
-  .banner .swiper{
+  .banner .swiper {
     height: 100%;
+  }
+  /*  .skeleton {
+    height: 300px;
+    background-color: #eee;
+    background-image: linear-gradient(
+      110deg,
+      #ececec 8%,
+      #f5f5f5 18%,
+      #ececec 33%
+    );
+    background-size: 200% 100%;
+    animation: 1.5s shine linear infinite;
+  }
+  @keyframes shine {
+    to {
+      background-position-x: -200%;
+    }
+  } */
+  .skeleton {
+    background-color: #e2e5e7;
+    // The shine that's going to move across the skeleton:
+    background-image: linear-gradient(
+      90deg,
+      rgba(#fff, 0),
+      rgba(#fff, 0.5),
+      rgba(#fff, 0)
+    );
+    background-size: 40px 100%; // width of the shine
+    background-repeat: no-repeat; // No need to repeat the shine effect
+    background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
+    animation: shine 1s ease infinite; // increase animation time to see effect in 'slow-mo'
+  }
+
+  @keyframes shine {
+    to {
+      // Move shine from left to right, with offset on the right based on the width of the shine - see background-size
+      background-position: right -40px top 0;
+    }
   }
 }

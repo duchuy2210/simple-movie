@@ -123,22 +123,24 @@ function MovieTrailer() {
     <>
       <h2 className="text-3xl text-white text-center mb-10">Videos</h2>
       <div className="trailer grid grid-cols-3 gap-x-10 px-10 text-white mb-40">
-        {!!trailers &&
+        {trailers.length > 0 &&
           trailers.slice(2, 5).map(item => {
             return (
               <div
                 key={item.id}
                 className="w-full aspect-video flex flex-col items-center">
                 <span className="opacity-80 mb-5 text-lg">{item.name}</span>
-                <iframe
-                  className="w-full h-full object-fill"
-                  width="1280"
-                  height="720"
-                  src={`https://www.youtube.com/embed/${item.key}`}
-                  title="Simple_Movie_Vid"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen></iframe>
+                {
+                  <iframe
+                    className="w-full h-full object-fill"
+                    width="1280"
+                    height="720"
+                    src={`https://www.youtube.com/embed/${item.key}`}
+                    title="Simple_Movie_Vid"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen></iframe>
+                }
               </div>
             );
           })}
@@ -154,7 +156,6 @@ function SimilarMovie() {
   );
   if (!data) return null;
   const similarMovies = data?.results || [];
-  console.log(similarMovies);
   return (
     <>
       <h2 className="text-3xl text-white text-center mb-10">Similar Movies</h2>
