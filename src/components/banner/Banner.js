@@ -4,6 +4,7 @@ import useSWR from 'swr';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import { apiKey } from '../../config';
 import { useNavigate } from 'react-router-dom';
+import Button from '../button/Button';
 
 const Banner = () => {
   // const [movies, setMovies] = useState([]);
@@ -13,10 +14,10 @@ const Banner = () => {
   );
   const movies = data?.results || [];
   // useEffect(() => {
-    //   data && setMovies(data.results);
-    // }, [data]);
-    return (
-      <section className="banner h-[500px] page-container mb-16">
+  //   data && setMovies(data.results);
+  // }, [data]);
+  return (
+    <section className="banner h-[500px] page-container mb-16">
       <Swiper grabCursor={true} slidesPerView={'auto'}>
         {!!movies?.length > 0 &&
           movies.map(item => {
@@ -55,10 +56,11 @@ function BannerItems({ item }) {
             action
           </span>
         </div>
-        <button
+        <Button onClick={() => navigate(`/movie/${id}`)}>Watch now</Button>
+        {/* <button
           onClick={()=>navigate(`/movie/${id}`)} className="px-6 py-3 bg-primary rounded-lg font-medium text-white">
           Watch
-        </button>
+        </button> */}
       </div>
     </div>
   );
