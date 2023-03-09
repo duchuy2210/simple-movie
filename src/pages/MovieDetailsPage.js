@@ -3,15 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useSWR from 'swr';
 import MovieCard from '../components/movie/MovieCard';
-import { apiKey, fetcher } from '../config';
+import { fetcher, tmdbAPI } from '../config';
 
 const MovieDetailsPage = () => {
   const navigate = useNavigate();
   const { movieId } = useParams();
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`,
-    fetcher
-  );
+  const { data } = useSWR(tmdbAPI.getMovieDetail(movieId), fetcher);
   if (!data) return null;
   const { backdrop_path, poster_path, title, genres, overview } = data;
   return (
@@ -81,10 +78,7 @@ const MovieDetailsPage = () => {
 };
 function MovieCredits() {
   const { movieId } = useParams();
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${apiKey}&language=en-US`,
-    fetcher
-  );
+  const { data } = useSWR(tmdbAPI.getMovieMeta(movieId, 'credits'), fetcher);
   if (!data) return null;
   const { cast } = data;
   return (
@@ -113,10 +107,7 @@ function MovieCredits() {
 }
 function MovieTrailer() {
   const { movieId } = useParams();
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=en-US`,
-    fetcher
-  );
+  const { data } = useSWR(tmdbAPI.getMovieMeta(movieId, 'videos'), fetcher);
   if (!data) return null;
   const trailers = data?.results || [];
   return (
@@ -150,10 +141,7 @@ function MovieTrailer() {
 }
 function SimilarMovie() {
   const { movieId } = useParams();
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=${apiKey}&language=en-US&page=1`,
-    fetcher
-  );
+  const { data } = useSWR(tmdbAPI.getMovieMeta(movieId, 'similar'), fetcher);
   if (!data) return null;
   const similarMovies = data?.results || [];
   return (

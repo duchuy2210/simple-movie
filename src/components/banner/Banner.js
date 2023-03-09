@@ -1,17 +1,13 @@
 import React from 'react';
-import { fetcher } from '../../config';
+import { fetcher, tmdbAPI } from '../../config';
 import useSWR from 'swr';
 import { SwiperSlide, Swiper } from 'swiper/react';
-import { apiKey } from '../../config';
 import { useNavigate } from 'react-router-dom';
 import Button from '../button/Button';
 
 const Banner = () => {
   // const [movies, setMovies] = useState([]);
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=en-US&page=1`,
-    fetcher
-  );
+  const { data } = useSWR(tmdbAPI.getMovieList('upcoming'), fetcher);
   const movies = data?.results || [];
   // useEffect(() => {
   //   data && setMovies(data.results);
