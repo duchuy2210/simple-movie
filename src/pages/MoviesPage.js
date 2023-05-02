@@ -9,7 +9,6 @@ import ReactPaginate from 'react-paginate';
 const itemsPerPage = 20;
 
 const MoviesPage = () => {
-  
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [nextPage, setNextPage] = useState(1);
