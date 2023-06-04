@@ -1,0 +1,9 @@
+import express from "express";
+
+const authRouter = express.Router();
+
+authRouter.get('/', (req, res) => {
+  res.send('ĐỊT MẸ MÀY!');
+});
+
+export default authRouter;
