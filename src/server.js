@@ -5,8 +5,13 @@ import connectDB from './config/connectDB';
 import initRoutes from './routes/routes';
 const app = express();
 
+// Config app
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 //Ngăn chặn cors origin => Disable CORS
 app.use(cors());
+app.options('*', cors());
 
 connectDB();
 initRoutes(app);

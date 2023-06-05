@@ -1,6 +1,6 @@
 import authRouter from "./authRoute";
 
 function initRoutes(app){
-  app.use('/',authRouter);
+  app.use('/auth',authRouter);
 }
 export default initRoutes;
