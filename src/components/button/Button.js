@@ -1,14 +1,16 @@
+import { LoadingCircle } from 'components/common/loading/Circle';
 import React from 'react';
 
 const Button = ({
+  isLoading = false,
   onClick,
   className,
   type = 'button',
   children,
-  bgColor = 'primary',
+  kind = 'primary',
 }) => {
   let bgClassName = 'bg-primary';
-  switch (bgColor) {
+  switch (kind) {
     case 'primary':
       bgClassName = 'bg-primary';
       break;
@@ -22,8 +24,10 @@ const Button = ({
     <button
       type={type}
       onClick={onClick}
-      className={`px-6 py-3 rounded-lg capitalize font-medium text-white ${bgClassName} ${className}`}>
-      {children}
+      className={`px-6 py-3 rounded-lg ${
+        !!isLoading ? 'opacity-50 pointer-events-none' : ''
+      } capitalize font-medium flex justify-center items-center text-white ${bgClassName} ${className}`}>
+      {isLoading ? <LoadingCircle></LoadingCircle> : children}
     </button>
   );
 };

@@ -1,3 +1,4 @@
+import { Button } from 'components/button';
 import React, { Fragment } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -47,9 +48,7 @@ const MovieDetailsPage = () => {
                 src={`https://image.tmdb.org/t/p/original/${poster_path}`}
                 alt="Ảnh"
               />
-              <button className="w-full p-3 bg-primary rounded-xl text-white text-[20px] opacity-80 hover:opacity-100 hover:scale-y-[1.2] transition-all">
-                Play
-              </button>
+              <Button>Play</Button>
             </div>
             <div className="text-white py-10 w-[1000px]">
               <h1 className=" text-5xl font-serif mb-14">{title}</h1>
