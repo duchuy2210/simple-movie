@@ -3,6 +3,7 @@ import { useController } from 'react-hook-form';
 import Field from '../Field';
 import { Label } from '../label';
 import { propTypes } from 'prop-types';
+import Error from '../Error';
 
 const Input = ({
   error = '',
@@ -14,7 +15,10 @@ const Input = ({
   icon,
   ...props
 }) => {
-  const { field } = useController({
+  const {
+    field,
+    formState: { errors },
+  } = useController({
     control,
     name,
     defaultValue: '',
@@ -27,8 +31,7 @@ const Input = ({
           <input
             type={type}
             id={name}
-            className={`block w-full font-sans bg-[#ebebeb] rounded-[4px] border !border-[#3e3e3e] text-[14px] text-slate-900 px-[15px] py-[10px] focus:bg-white placeholder:opacity-60 placeholder:text-slate-900 ${className} ${
-              error.length > 0 ? 'border-red-600' : 'border-white'
+            className={`block w-full font-sans bg-[#ebebeb] rounded-[4px] border text-[14px] text-slate-900 px-[15px] py-[10px] focus:bg-white placeholder:opacity-60 placeholder:text-slate-900 ${className}
             }`}
             {...field}
             {...props}
@@ -37,6 +40,9 @@ const Input = ({
             {icon}
           </div>
         </div>
+        {errors?.[name]?.message && (
+          <Error errorMessage={String(errors?.[name]?.message)}></Error>
+        )}
       </Field>
     </div>
   );

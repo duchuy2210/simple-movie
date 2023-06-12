@@ -2,10 +2,11 @@ import { LoadingCircle } from 'components/common/loading/Circle';
 import React from 'react';
 
 const Button = ({
+  control,
   isLoading = false,
   onClick,
   className,
-  type = 'button',
+  type = 'submit',
   children,
   kind = 'primary',
 }) => {
@@ -22,6 +23,7 @@ const Button = ({
   }
   return (
     <button
+      control={control}
       type={type}
       onClick={onClick}
       className={`px-6 py-3 rounded-lg ${
