@@ -1,6 +1,8 @@
 import { takeLatest } from 'redux-saga/effects';
-import handleSignUp from './authHandler';
-import { authSignIn, authSignUp } from './authSlice';
+import { actionSignIn, actionSignUp } from './authAction';
+import { handleSignIn, handleSignUp } from './authHandler';
+
 export default function* authSaga() {
-  yield takeLatest(authSignUp.type, handleSignUp);
+  yield takeLatest(actionSignUp.type, handleSignUp);
+  yield takeLatest(actionSignIn.type, handleSignIn);
 }

@@ -6,6 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionSignIn } from 'store/auth/authAction';
 
 const schema = yup.object({
   email: yup
@@ -20,12 +22,21 @@ const schema = yup.object({
 
 const SignInPage = () => {
   const navigateTo = useNavigate();
+  const dispatch = useDispatch();
+  const { loadingSignIn } = useSelector(state => state.auth);
   const { handleSubmit, control } = useForm({
     resolver: yupResolver(schema),
     mode: 'onSubmit',
   });
-  const handleSignIn = value => {
-    console.log('value:', value);
+  const handleSignIn = values => {
+    dispatch(
+      actionSignIn({
+        values,
+        onSuccess: () => {
+          navigateTo('/');
+        },
+      })
+    );
   };
   return (
     <div className="">
@@ -53,7 +64,7 @@ const SignInPage = () => {
           </span>
         </div>
         <Button
-          isLoading={false}
+          isLoading={loadingSignIn}
           type="submit"
           className="mt-10 w-[200px] block mx-auto">
           Đăng Nhập

@@ -4,14 +4,12 @@ const initialState = {
   userData: {},
   loadingSignUp: false,
   loadingSignIn: false,
-  messageSignUpError: '',
-  messageSignInError: '',
 };
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    userData: (state, action) => ({
+    setUserData: (state, action) => ({
       ...state,
       userData: { ...state.userData, ...action.payload },
     }),
@@ -19,16 +17,13 @@ const authSlice = createSlice({
       ...state,
       loadingSignUp: payload,
     }),
-    authSignIn: (state, action) => ({
+    setLoadingSignIn: (state, { payload }) => ({
       ...state,
-      ...action.payload,
-    }),
-    authSignUp: (state) => ({
-      ...state,
+      loadingSignIn: payload,
     }),
   },
 });
-export const { userData, authSignIn, authSignUp, setLoadingSignUp } =
+export const { setUserData, setLoadingSignUp, setLoadingSignIn } =
   authSlice.actions;
 
 export default authSlice.reducer;

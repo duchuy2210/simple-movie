@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authSignUp } from 'store/auth/authSlice';
+import { actionSignUp } from 'store/auth/authAction';
 
 const schema = yup.object({
   user_name: yup.string().required('Không được để trống mục này'),
@@ -32,7 +33,14 @@ const SignUpPage = () => {
     mode: 'onSubmit',
   });
   const handleSignUp = async values => {
-    dispatch(authSignUp(values));
+    dispatch(
+      actionSignUp({
+        values,
+        onSuccess: () => {
+          navigateTo('/auth/sign-in');
+        },
+      })
+    );
   };
   return (
     <div className="">

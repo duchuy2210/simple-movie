@@ -30,7 +30,6 @@ const Banner = () => {
 function BannerItems({ item }) {
   const navigate = useNavigate();
   const { title, backdrop_path, id } = item;
-  console.log(item);
   return (
     <div className="h-full w-full bg-white rounded-lg mx-auto relative">
       <div className="overlay inset-0 absolute bg-gradient-to-t from-black rounded-lg to-transparent"></div>
