@@ -1,11 +1,13 @@
 import { Button } from 'components/button';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {Input, InputTogglePassWord } from 'components/form';
+import { Input, InputTogglePassWord } from 'components/form';
 import { Heading } from 'components/Heading';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { authSignUp } from 'store/auth/authSlice';
 
 const schema = yup.object({
   user_name: yup.string().required('Không được để trống mục này'),
@@ -21,16 +23,16 @@ const schema = yup.object({
 
 const SignUpPage = () => {
   const navigateTo = useNavigate();
-  const {
-    handleSubmit,
-    control,
-    formState: { errors, isValid, isSubmitting },
-  } = useForm({
+  const dispatch = useDispatch();
+  const { loadingSignUp } = useSelector(state => {
+    return state.auth;
+  });
+  const { handleSubmit, control } = useForm({
     resolver: yupResolver(schema),
     mode: 'onSubmit',
   });
-  const handleSignUp = value => {
-    console.log('value:', value);
+  const handleSignUp = async values => {
+    dispatch(authSignUp(values));
   };
   return (
     <div className="">
@@ -67,7 +69,7 @@ const SignUpPage = () => {
           </span>
         </div>
         <Button
-          isLoading={false}
+          isLoading={loadingSignUp}
           type="submit"
           control={control}
           className="mt-10 w-[200px] block mx-auto">
