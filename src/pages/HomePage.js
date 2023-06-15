@@ -1,11 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Banner from '../components/banner/Banner';
 import MovieList from '../components/movie/MovieList';
 
 const HomePage = () => {
   const { userData } = useSelector(state => state.auth);
+  const navigateTo = useNavigate();
+  useEffect(() => {
+    if (!userData.email) {
+      navigateTo('/auth/sign-in');
+    }
+  }, []);
   console.log('userData:', userData);
   return (
     <Fragment>
