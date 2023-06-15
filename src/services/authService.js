@@ -71,67 +71,6 @@ const authService = {
       } catch (error) {
         reject(error);
       }
-      try {
-        // Kiểm tra xem có nhập email password, user_name không
-        if (
-          !signUpData.email ||
-          !signUpData.password ||
-          !signUpData.user_name
-        ) {
-          return resolve({
-            status: 422,
-            payload: {
-              message: 'Nhập thiếu dữ liệu',
-            },
-          });
-        }
-
-        // Check validate Email
-        if (!isEmailValid(signUpData.email)) {
-          return resolve({
-            status: 422,
-            payload: {
-              message: 'Email không hợp lệ',
-            },
-          });
-        }
-
-        //Kiểm tra xem đã tồn tại User này chưa
-        const isAlreadyExist = await db.User.findOne({
-          where: { email: signUpData.email },
-          attributes: { exclude: ['password'] },
-          raw: true,
-        });
-        if (isAlreadyExist) {
-          return resolve({
-            status: 409,
-            payload: {
-              message: 'Tài khoản đã tồn tại',
-            },
-          });
-        }
-
-        //Không có lỗi thì tạo user mới và lưu vào database
-        //CÓ THỂ DÙNG CREATE THÁY THẾ BUILD VÀ SAVE
-        const newUser = await db.User.build(
-          {
-            ...signUpData,
-            password: bcrypt.hashSync(signUpData.password, salt),
-            role_id: 0,
-            is_banned: false,
-          },
-          { raw: true }
-        );
-        await newUser.save();
-        return resolve({
-          status: 200,
-          payload: {
-            message: 'Đăng ký thành công',
-          },
-        });
-      } catch (error) {
-        reject(error);
-      }
     });
   },
   handleSignIn: async signInData => {
@@ -194,7 +133,10 @@ const authService = {
             expiresIn: '15s',
           }
         );
-        const refresh_token = await authService.createRefreshToken(id, { email, id });
+        const refresh_token = await authService.createRefreshToken(id, {
+          email,
+          id,
+        });
         return resolve({
           status: 200,
           payload: {
@@ -298,13 +240,16 @@ const authService = {
                   expiresIn: '15s',
                 }
               );
-              const new_refresh_token = await authService.createRefreshToken(data.id,{ email: data.email, id: data.id })
+              const new_refresh_token = await authService.createRefreshToken(
+                data.id,
+                { email: data.email, id: data.id }
+              );
               return resolve({
                 status: 200,
                 payload: {
                   message: 'Create new access_token successfully',
                   new_access_token,
-                  new_refresh_token
+                  new_refresh_token,
                 },
               });
             }
