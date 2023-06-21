@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 const accessTokenKey = 'access_token';
 const refreshTokenKey = 'refresh_token';
+const userData = 'user_data';
 const objCookies = {
   expires: 7,
   domain: process.env.COOKIE_DOMAIN,
@@ -27,6 +28,11 @@ export const saveToken = (access_token, refresh_token) => {
     });
   }
 };
+export const saveUser = data => {
+  Cookies.set(userData, data, {
+    ...objCookies,
+  });
+};
 
 export const getToken = () => {
   const access_token = Cookies.get(accessTokenKey);
@@ -36,6 +42,12 @@ export const getToken = () => {
     refresh_token,
   };
 };
+// export const getUser = () => {
+//   const user_data = Cookies.get(userData);
+//   return {
+//     user_data,
+//   };
+// };
 export const logOut = () => {
   const access_token = Cookies.get(accessTokenKey);
   if (access_token) {
@@ -49,5 +61,10 @@ export const logOut = () => {
       path: '/',
       domain: process.env.COOKIE_DOMAIN,
     });
+    // Cookies.remove(userData, {
+    //   ...objCookies,
+    //   path: '/',
+    //   domain: process.env.COOKIE_DOMAIN,
+    // });
   }
 };

@@ -1,4 +1,4 @@
-import { myAxios } from 'axiosConfig';
+import { myAxios, privateAxios } from 'axiosConfig';
 
 export function requestSignUp(payload) {
   return myAxios.request({
@@ -13,5 +13,11 @@ export function requestSignIn(payload) {
     method: 'POST',
     url: '/auth/sign-in',
     data: payload,
+  });
+}
+export function requestGetThisUserData() {
+  return privateAxios.request({
+    method: 'GET',
+    url: '/g/me',
   });
 }

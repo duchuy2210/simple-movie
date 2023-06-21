@@ -3,11 +3,12 @@ import { Input, InputTogglePassWord } from 'components/form';
 import { Heading } from 'components/Heading';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { actionSignIn } from 'store/auth/authAction';
+import { forceSignOut } from 'store/store';
 
 const schema = yup.object({
   email: yup
@@ -22,6 +23,9 @@ const schema = yup.object({
 
 const SignInPage = () => {
   const navigateTo = useNavigate();
+  useEffect(() => {
+    forceSignOut();
+  }, []);
   const dispatch = useDispatch();
   const { loadingSignIn } = useSelector(state => state.auth);
   const { handleSubmit, control } = useForm({

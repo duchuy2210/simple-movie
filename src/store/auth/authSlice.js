@@ -1,7 +1,9 @@
-const { createSlice } = require('@reduxjs/toolkit');
+import { logOut } from 'helpers/handleCookies';
 
+const { createSlice } = require('@reduxjs/toolkit');
 const initialState = {
   userData: {},
+  loadingGetThisUserData: false,
   loadingSignUp: false,
   loadingSignIn: false,
 };
@@ -21,9 +23,25 @@ const authSlice = createSlice({
       ...state,
       loadingSignIn: payload,
     }),
+    setLoadingGetThisUserData: (state, { payload }) => ({
+      ...state,
+      loadingGetThisUserData: payload,
+    }),
+    signOut: state => {
+      logOut();
+      return {
+        ...state,
+        userData: initialState.userData,
+      };
+    },
   },
 });
-export const { setUserData, setLoadingSignUp, setLoadingSignIn } =
-  authSlice.actions;
+export const {
+  setUserData,
+  setLoadingSignUp,
+  setLoadingSignIn,
+  setLoadingGetThisUserData,
+  signOut,
+} = authSlice.actions;
 
 export default authSlice.reducer;

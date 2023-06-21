@@ -1,8 +1,17 @@
-import { saveToken } from 'helpers/handleCookies';
+import { saveToken, saveUser } from 'helpers/handleCookies';
 import { toast } from 'react-toastify';
 import { call, put } from 'redux-saga/effects';
-import { requestSignIn, requestSignUp } from './authRequest';
-import { setLoadingSignIn, setLoadingSignUp, setUserData } from './authSlice';
+import {
+  requestGetThisUserData,
+  requestSignIn,
+  requestSignUp,
+} from './authRequest';
+import {
+  setLoadingGetThisUserData,
+  setLoadingSignIn,
+  setLoadingSignUp,
+  setUserData,
+} from './authSlice';
 
 export function* handleSignUp(action) {
   const { payload } = action;
@@ -25,11 +34,29 @@ export function* handleSignIn(action) {
     const { data } = yield call(requestSignIn, payload.values);
     yield put(setUserData(data.userData));
     saveToken(data.access_token, data.refresh_token);
+    // yield call(handleGetThisUserData, { payload: data.access_token });
     payload.onSuccess();
   } catch (error) {
     console.log('error:', error);
     // toast.error(error.response.data.message);
   } finally {
     yield put(setLoadingSignIn(false));
+  }
+}
+
+export function* handleGetThisUserData() {
+  yield put(setLoadingGetThisUserData(true));
+  try {
+    const { data } = yield call(requestGetThisUserData);
+    if (data) {
+      const userData = data.data;
+      console.log('userData:', userData);
+      // yield put(setUserData(userData));
+      // saveUser(userData);
+    }
+  } catch (err) {
+    console.log(err);
+  } finally {
+    yield put(setLoadingGetThisUserData(false));
   }
 }

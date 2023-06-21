@@ -1,6 +1,12 @@
+import { Button } from 'components/button';
 import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { actionThisUserData } from 'store/auth/authAction';
+import { forceSignOut } from 'store/store';
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigateTo = useNavigate();
   const navList = [
     {
       to: '/',
@@ -15,6 +21,13 @@ const Header = () => {
       title: 'Movie List',
     },
   ];
+  const handleSignOut = () => {
+    forceSignOut();
+    navigateTo('/auth/sign-in');
+  };
+  const handleGetProfile = () => {
+    dispatch(actionThisUserData());
+  };
   return (
     <Fragment>
       <header className="header flex items-center justify-center gap-x-5 text-white py-10 mb-10">
@@ -28,6 +41,8 @@ const Header = () => {
             </NavLink>
           );
         })}
+        <Button onClick={handleSignOut}>Sign Out</Button>
+        <Button onClick={handleGetProfile}>Profile</Button>
       </header>
     </Fragment>
   );
