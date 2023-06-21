@@ -4,7 +4,7 @@ const refreshTokenKey = 'refresh_token';
 const userData = 'user_data';
 const objCookies = {
   expires: 7,
-  domain: process.env.COOKIE_DOMAIN,
+  domain: 'localhost',
 };
 
 export const saveToken = (access_token, refresh_token) => {
