@@ -1,20 +1,37 @@
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
 import dotenv from 'dotenv';
-import { isEmailValid } from '../utils';
 
 import db from '../models';
 dotenv.config();
-var salt = bcrypt.genSaltSync(10);
 
-const authService = {
-  handleSignUp: async signUpData => {
+const getService = {
+  getUserById: async userId => {
     return new Promise(async (resolve, reject) => {
       try {
-      } catch (error) {
-        reject(error);
+        const data = await db.User.findOne({
+          where: { id: userId },
+          attributes: { exclude: ['password'] },
+          raw: true,
+        });
+
+        if (!data) {
+          return resolve({
+            status: 404,
+            payload: {
+              message: 'Data not found',
+            },
+          });
+        }
+        return resolve({
+          status: 200,
+          payload: {
+            message: `Get data successfully`,
+            data: data,
+          },
+        });
+      } catch (err) {
+        reject(err);
       }
     });
   },
 };
-export default authService;
+export default getService;

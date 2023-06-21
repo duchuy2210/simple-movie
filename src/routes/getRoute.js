@@ -1,7 +1,9 @@
 import express from 'express';
+import GetController from '../controllers/GetController';
+import { checkToken } from '../middlewares/checkToken';
 
-const authRouter = express.Router();
+const getRouter = express.Router();
 
-authRouter.get('/user/:id', );
+getRouter.get('/me', checkToken, GetController.getUserById);
 
 export default getRouter;

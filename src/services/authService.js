@@ -130,7 +130,7 @@ const authService = {
           { email, id },
           process.env.ACCESS_TOKEN_SECRET,
           {
-            expiresIn: '15s',
+            expiresIn: '30s',
           }
         );
         const refresh_token = await authService.createRefreshToken(id, {

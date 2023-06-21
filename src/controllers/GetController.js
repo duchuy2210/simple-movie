@@ -1,9 +1,9 @@
-import authService from '../services/authService';
+import getService from '../services/getService';
 
-const AuthController = {
-  handleSignUp: async (req, res) => {
+const GetController = {
+  getUserById: async (req, res) => {
     try {
-      const { status, payload } = await authService.handleSignUp(req.body);
+      const { status, payload } = await getService.getUserById(req.id);
       return res.status(status).json(payload);
     } catch (error) {
       console.log(error);
@@ -11,4 +11,4 @@ const AuthController = {
     }
   },
 };
-export default AuthController;
+export default GetController;
